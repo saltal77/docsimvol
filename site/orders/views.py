@@ -49,5 +49,5 @@ def AdminOrderPDF(request, order_id):
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'filename=order_{}.pdf'.format(order.id)
     weasyprint.HTML(string=html).write_pdf(response,
-               stylesheets=[weasyprint.CSS('/home/obiwankenobi/web/site/static/css/bootstrap.min.css')])
+               stylesheets=[weasyprint.CSS('/home/someuseronsomeserver/web/site/static/css/bootstrap.min.css')])
     return response
