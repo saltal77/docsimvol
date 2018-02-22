@@ -1,0 +1,87 @@
+{% extends "shop_base.html" %}
+{% load staticfiles %}
+{% block content %}
+<!-- Inner Banner Start -->
+<section id="inner-banner" class="back-image-contacts">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12 text-center">
+				<div class="inner-banner-detail">
+					<p><a href="/">Главная</a><span> - </span>Контакты</p>
+					<h2>Координаты</h2>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- Inner Banner End -->
+<!-- 404 Error -->
+<section id="error_page" class="padding_bottom padding_top">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="inner_heading heading_space">
+					<h2>Адреса <span>Магазинов</span></h2><br>
+					{% for inf in text %}
+					<span>{% autoescape off %}{{ inf.adress }}{% endautoescape %}</span><br><br>
+					{% empty %}
+					<p>Контент редактируется</p>
+					{% endfor %}
+				</div>
+				<div class="inner_heading heading_space">
+					<h2>Как до нас <span>добраться?</span></h2><br>
+					{% for inf in text %}
+					<span>{% autoescape off %}{{ inf.route }}{% endautoescape %}</span><br><br>
+					{% empty %}
+					<p>Контент редактируется</p>
+					{% endfor %}
+					<div>
+                        <b>мы на карте Ставрополя</b>
+						<iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A6548421a6b06b1c7ca0882d97cae583e4b13f0c12fdd0f7f06c5d786014e7cd2&amp;source=constructor" width="1140" height="400" frameborder="0"></iframe>
+                        <b>мы на карте Анапы</b>
+                        <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A9c5dd9c8f269bf75faf6e3726f49d8088a36a2c610a26ebb34aa8a1744a4b758&amp;source=constructor" width="1140" height="400" frameborder="0"></iframe>
+				</div>
+				<div class="inner_heading heading_space">
+					<h2>Информация <a href="/delivery/"><span style="color:red;">о доставке</span></a></h2><br>
+                    <span>Все подробности и условия в разделе <a href="/delivery/">Доставка</a></span>
+				</div>
+				<div class="inner_heading heading_space">
+					<h2>Напиште <span> Нам ...</span></h2><br>
+					<span>Если у Вас есть какие-нибудь предложения или замечания, которые сделают работу нашего магазина лучше - смело пишите нам!<br> Мы обязательно рассмотрим каждое письмо. </span>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<form class="contact_form" action="" method="post">
+                                {% csrf_token %}
+				<div class="col-md-5 col-sm-5 col-xs-12">
+                    {% for field in mailing_form %}
+                        {% if field.name in 'author, tlf, email' %}
+                            <div class="form-group">
+                             <span style="color: red">{{ field.errors }}</span>
+                            {{ field }}
+                            </div>
+                        {% endif %}
+                        {% endfor %}
+				</div>
+				<div class="col-md-7 col-sm-7 col-xs-12">
+                    {% for field in mailing_form %}
+                        {% if field.name in 'message' %}
+                            <div class="form-group">
+                              <span style="color: red">{{ field.errors }}</span>
+                            {{ field }}
+                            </div>
+                        {% endif %}
+                     {% endfor %}
+				</div>
+                <div class="col-md-12">
+						<div class="form-group">
+							<input name="button" class="contact-form-button" value="Отправить" type="submit">
+						</div>
+					</div>
+			</form>
+		</div>
+	</div>
+</section>
+<!-- Login End -->
+{% endblock content %}

@@ -1,0 +1,201 @@
+{% extends "shop_base.html" %}
+{% load staticfiles %}
+{% load thumbnail %}
+{% block content %}
+<!-- Inner Banner Start -->
+<section id="inner-banner" class="back-image-proddetails">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12 text-center">
+				<div class="inner-banner-detail">
+					<p><a href="/">Главная</a><span> - </span> <a href="/shop/">Каталог</a></p>
+					<h2>Подробности</h2>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- Inner Banner End -->
+<!--  Blog Start  -->
+<section id="shop-section" class="padding_top">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-9 col-sm-9 col-xs-12">
+				<div class="block-product-detail">
+					<div class="row">
+						<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+							<div class="product-image">
+								<img id="product-zoom" src="{%  thumbnail product.image 400x533 crop  %}" data-zoom-image="{{ product.image.url }}" alt="Фото товара">
+								<div id="gal1">
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+							<div class="product-detail-section">
+								{% if product.str_category not in 'Брюки, Шапки, Куртки, Носки, Обувь, Поло, Блузы, Футболки, Юбки, Платья' %}
+								<h3>{{ product.str_category|cut:'ы' }}</h3>
+								{% elif product.str_category in 'Шапки, Куртки, Блузы, Футболки, Юбки' %}
+								<h3>{{ product.str_category|cut:'и'|add:'а' }}</h3>
+								{% elif product.str_category in 'Платья' %}
+								<h3>{{ product.str_category|cut:'я'|add:'е' }}</h3>
+								{% else %}
+								<h3>{{ product.category }}</h3>
+								{% endif %}
+								<div class="product-rating">
+									<div class="stars">
+                                        {% for comnt in product.rate.all %}
+                                          {% if comnt.display %}
+                                        {% for i in '12345' %}
+                                          {% if forloop.counter <= comnt.rating %}
+                                          <i class='fa fa-star'></i>
+                                          {% else %}
+                                          <i class='fa fa-star-o'></i>
+                                          {% endif %}
+                                        {% endfor %}
+                                          {% endif %}
+                                          {% endfor %}
+									</div>
+									{% if  product.allow_comments %}<a href="" class="review">Отзывов {{ product.allow_comments }} </a>{% endif %}
+								</div>
+								<div class="product-information">
+									<div class="clearfix">
+										<label class="pull-left">Фирма</label> <a href="javascript:void(0)">{{ product.firm }}</a>
+									</div>
+									<div class="clearfix">
+										<label class="pull-left">Название</label> <h5>{{ product.name }}</h5>
+									</div>
+                                {% if product.has_tips != "Нет" %}
+                                    <div class="clearfix">
+										<label class="pull-left">Тип</label> {{ product.tips|lower }}.
+									</div>
+                                {% endif %}
+                                {% if product.has_size != "N" %}
+									<div class="clearfix">
+										<label class="pull-left">Размер</label><h5>{{ product.size }}</h5>
+									</div>
+                                {% endif %}
+									<div class="clearfix">
+										<label class="pull-left">Цвет</label>{{ product.color|lower }}
+									</div>
+									<div class="clearfix">
+										<label class="pull-left">Наличие</label>
+                                        {% if product.stock %}<p>доступен</p>{% else %}<p><b>уточняйте у менеджера</b></p>{% endif %}
+									</div>
+									<div class="clearfix">
+										<label class="pull-left">Цена</label>
+										<p class="product-price">{{ product.price }} <i class="fa fa-rub" aria-hidden="true"></i></p>
+									</div>
+                                <div class="clearfix">
+									<form action="{% url 'cart:CartAdd' product.id %}" method="post" class="add">
+                                        {% for field in cart_product_form %}
+                                            {% if field.name == 'quantity' %}
+                                                <label class="pull-left">{{ field.label }}</label>{{ field }}
+                                            {% endif %}
+                                        {% endfor %}
+                                         {% csrf_token %}
+                                    <div class="shopping-cart-buttons-b">
+                                        <button class="shoping-b" type="submit" value="Купить"><i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;Купить</button>
+                                    </div>
+                                    </form>
+                                 </div>
+                                {% if product.str_id in cart.id_items %}
+                                    <br>
+									<div class="clearfix">
+										<h5 style="color: #fb2415;">Товар добавлен в Вашу корзину</h5>
+									</div>
+                                   {% endif %}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="review-tabs">
+					<!-- Nav tabs -->
+					<ul class="nav nav-tabs" role="tablist">
+						<li role="presentation" class="active"><a href="#description" aria-controls="description" role="tab" data-toggle="tab">Описание</a>
+						</li>
+						<li role="presentation"><a href="#additional" aria-controls="additional" role="tab" data-toggle="tab">Дополнительно</a>
+						</li>
+						<li role="presentation"><a href="#review" aria-controls="review" role="tab" data-toggle="tab">Отзывы ({{ product.allow_comments }})</a>
+						</li>
+					</ul>
+					<!-- Tab panes -->
+					<div class="tab-content">
+						<div role="tabpanel" class="tab-pane fade in active" id="description">
+							<h4>Подробное описание</h4>
+							<p>{{ product.description }}</p>
+							</div>
+						<div role="tabpanel" class="tab-pane fade " id="additional">
+							<h4>Дополнительная информация</h4>
+							<table class="shop_attributes">
+								<tbody>
+									<tr class="">
+										<th>Цвета</th>
+										<td>
+											<p>{{ clrs }}</p>
+										</td>
+									</tr>
+                                    {% if sizs not in 'N' %}
+									<tr class="alt">
+										<th>Размеры</th>
+										<td>
+											<p>{{ sizs }}</p>
+										</td>
+									</tr>
+                                    {% endif %}
+								</tbody>
+							</table>
+						</div>
+						<div role="tabpanel" class="tab-pane fade " id="review">
+							<h4>Отзывы</h4>
+                             {% for comnt in product.rate.all %}
+                              {% if comnt.display %}
+                                  <span>{{comnt.ratingcomment }}</span><br>
+                                  <span>{{comnt.created|date }} автор: {{comnt.author}}</span><br><br>
+                            {% endif %}
+                        {% endfor %}
+							{% if not product.allow_comments %}<p>Пока не оставлено отзывов. Будьте первым!</p>{% endif %}
+							<div class="review-form">
+								<h5>Оцените товар и оставьте свой отзыв...</h5>
+                              <form action="" method="post">
+                              {% csrf_token %}
+                                {% for field in rating_form %}
+
+                                    {% if field.name == 'rating' %}
+                                        <div class="product-rating">
+                                        <div class="stars">
+                                            {{ field }}
+                                        </div>
+                                        </div>
+                                    {% else %}
+                                    <div class="form-group">
+                                    <span style="color: red">{{ field.errors }}</span>
+                                        {{ field }}
+                                    </div>
+                                    {% endif %}
+                                {% endfor %}
+                                <div class="form-group">
+                                    <input type="submit" class="form-button" placeholder="Name" value="Отправить">
+                                </div>
+                               </form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3 col-sm-3 col-xs-12">
+				<div class="shop-sidebar-box">
+					<h3>Категории</h3>
+					<ul class="blog-sidebar-category">
+                     <li><a href="{% url "shop:ProductList" %}">Все</a></li>
+                       {% for cat in categories %}
+                     <li><a href="{{ cat.get_absolute_url }}">{{ cat.name }}: ({{ cat.distinctgoods }})</a></li>
+                       {% endfor %}
+                    </ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!--  shop End  -->
+{% endblock content %}

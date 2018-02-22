@@ -1,0 +1,237 @@
+{% extends "shop_base.html" %}
+{% load staticfiles %}
+{% load thumbnail %}
+{% block content %}
+<!-- Inner Banner Start -->
+<section id="inner-banner" class="back-image-catalog">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12 text-center">
+				<div class="inner-banner-detail">
+					<p><a href="/">Главная</a><span> - </span> <a href="/shop/">Каталог</a> </p>
+                    {% if qflag %}
+                        <h2>Результаты поиска</h2>
+                    {% else %}
+                        <h2>{{ category.name }}</h2>
+                    {% endif %}
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- Inner Banner End -->
+<!--  Shop Start  -->
+<section id="shop-section" class="padding_top">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-3 col-sm-3 col-xs-12">
+				<div class="shop-sidebar-box">
+					<h3>Поиск</h3>
+					<form class="blog-sidbar-search">
+						<input id='autowords' type="search" class="form-control" placeholder="введите запрос..." name="query" value="{{query|default:''}}">
+						<input type="submit" name="button" class="form-control" value="Найти">
+					</form>
+				</div>
+				<div class="shop-sidebar-box">
+					<h3>Категории</h3>
+					<ul class="blog-sidebar-category">
+                     <li><a href="{% url "shop:ProductList" %}">Все</a></li>
+                       {% for cat in categories %}
+                     <li><a href="{{ cat.get_absolute_url }}">{{ cat.name }}: ({{ cat.distinctgoods }})</a></li>
+                       {% endfor %}
+                    </ul>
+                </div>
+                 <form id='fltrForm' action="." method="get">
+				<div class="shop-sidebar-box">
+					<h3>Фильтр по характеристикам</h3>
+					<div class="control-group">
+						{% for field in form %}
+                            {% if field.name == 't' %}
+                                <div class="checkbox">{{ field }}</div>
+                                {% elif field.name == 'p' %}
+                                <div class="checkbox">{{ field }}</div>
+                                {% elif field.name == 'c' %}
+                                {{ field }}
+                            {% endif %}
+                        {% endfor %}
+					</div>
+                <a class="btn_light" href="{{ category.get_absolute_url }}" style="margin-top: 20px;">cбросить фильтр</a><br>
+				</div>
+				<div class="shop-sidebar-box">
+					<h3>Диапазон цен</h3>
+					<div class="side-price">
+						<div class="form-inline">
+							<div class="form-group" class="form-inline">
+								<div class="input-group">
+									<div class="input-group-addon">&#x20BD;</div>
+                                    {% for field in form %}
+                                    {% if field.name == 'p_min' %}
+									{{ field }}
+                                    {% endif %}
+                                    {% endfor %}
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="input-group">
+									<div class="input-group-addon">&#x20BD;</div>
+									{% for field in form %}
+                                    {% if field.name == 'p_max' %}
+									{{ field }}
+                                    {% endif %}
+                                    {% endfor %}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="shop-sidebar-box">
+					<h3>Выбор цвета</h3>
+					<div class="side-color">
+						<span id="Синий" title="Синий"></span ><span id="Красный" title="Красный"></span><span id="Желтый" title="Желтый"></span><span id="Зеленый" title="Зеленый"></span>
+<span id="Черный" title="Черный"></span><span id="Серый" title="Серый"></span><span id="Белый" title="Белый"></span>
+<span id="Бежевый" title="Бежевый"></span><span id="Оранжевый" title="Оранжевый"></span><span id="Коричневый" title="Коричневый">
+</span><span id="Розовый" title="Розовый"></span><span id="Голубой" title="Голубой"></span>
+					</div>
+				</div>
+				</form>
+			</div>
+			<div class="col-md-9 col-sm-9 col-xs-12">
+				{% if not qflag %}
+				<div class="blog-box">
+					<div id="web" class="blog-box-img">
+						<div id="bloghome_slider">
+                     {% for action in actions %}
+							<div class="item web_box shop-box">
+								<div class="row">
+									<div class="col-md-8 col-sm-8 col-xs-12">
+										<h3>{{ action.title }}</h3>
+										<p>{{ action.actionbigtext }}</p>
+									</div>
+									<div class="col-md-4 col-sm-4 col-xs-12">
+										<img src="{% thumbnail action.imageA 460x413 crop %}" alt="Фото Акции">
+									</div>
+								</div>
+							</div>
+                     {% endfor %}
+						</div>
+					</div>
+				</div>
+            {% endif %}
+				<div class="blog-box">
+					<div class="row heading_space">
+						<div class="col-md-12">
+							<div class="commerce_heading">
+                                {% if qflag %}
+                                    <h2>Результаты поиска</h2>
+                                {% else %}
+								<h2>{{ category.name }}</h2>
+                                {% endif %}
+							</div>
+						</div>
+					</div>
+					<div class="row">
+                        {% regroup products by name as products_list %}
+                        {% for product in products_list %}
+						{% for prod in product.list %}
+                        {% if forloop.first %}
+						<div class="myrow">
+						{% endif %}
+                        {% if forloop.first %}
+						<div  class="col-md-4 col-sm-4 col-xs-12 mydetail">
+							<div class="product_box web_box">
+								<figure class="wpf-demo-6">
+									<a href="{{ prod.get_absolute_url }}"><img src="{%  thumbnail prod.image 270x345 crop  %}" alt="Фото товара">
+									</a>
+								</figure>
+								<div class="product_detail">
+									<a href="{{ prod.get_absolute_url }}">
+										<h3>{{ product.grouper }}</h3>
+									</a>
+                                    <div class="product-rating">
+									<div class="stars">
+                                        {% for comnt in prod.rate.all %}
+                                          {% if comnt.display %}
+                                        {% for i in '12345' %}
+                                          {% if forloop.counter <= comnt.rating %}
+                                          <i class='fa fa-star'></i>
+                                          {% else %}
+                                          <i class='fa fa-star-o'></i>
+                                          {% endif %}
+                                        {% endfor %}
+                                          {% endif %}
+                                          {% endfor %}
+									</div>
+								    </div>
+                                  {% if prod.has_tips != "Нет" %}
+									<span>{{ prod.tips|lower }}.</span>
+                                   {% endif %}
+									<span>{{ prod.price }} &#x20BD;</span>
+								</div>
+							</div>
+						</div>
+                      {% endif %}
+                        {% if forloop.first %}
+						<div class="product_szdetail">
+						{% endif %}
+                                <a href="{{ prod.get_absolute_url }}" title="цвет: {{ prod.color|lower }}">
+                                {% if prod.has_size != "N" %}{{ prod.size }}{% else %}
+                                    <i class="fa fa-cart-arrow-down fa-lg" aria-hidden="true"></i>
+                                {% endif %}
+                                </a>
+							{% if forloop.last %}
+							</div>
+						</div>
+							{% endif %}
+                        {% endfor %}
+                            {% empty %}
+                            <h3 style="margin-left: 15px;">Нет товаров для отображения :(</h3>
+		                {% endfor %}
+                    <!-- Paginator -->
+                <div class="col-md-12 text-center padding-top-50">
+                    <nav aria-label="...">
+                    {% if products.has_other_pages %}
+                      <ul class="pagination">
+                        {% if products.has_previous %}
+                          <li><a href="?page={{ products.previous_page_number }}{% if request.GET.query %}&query={{request.GET.query }}{% endif %}{% if request.GET.c  and request.GET.c != ' ' %}&c={{request.GET.c }}{% endif %}{% if request.GET.t  and request.GET.t != ' ' %}&t={{request.GET.t }}{% endif %}{% if request.GET.p  and request.GET.p != ' ' %}&p={{request.GET.p }}{% endif %}{% if request.GET.p_max  %}&p_max={{request.GET.p_max }}{% endif %}{% if request.GET.p_min  %}&p_min={{request.GET.p_min }}{% endif %}">Пред</a></li>
+                        {% else %}
+                          <li class="disabled"><span aria-hidden="true">Пред</span></li>
+                        {% endif %}
+                        {% for i in products.paginator.page_range %}
+                          {% if products.number == i %}
+                            <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                          {% else %}
+                            <li><a href="?page={{ i }}{% if request.GET.query %}&query={{request.GET.query }}{% endif %}{% if request.GET.c  and request.GET.c != ' ' %}&c={{request.GET.c }}{% endif %}{% if request.GET.t  and request.GET.t != ' ' %}&t={{request.GET.t }}{% endif %}{% if request.GET.p  and request.GET.p != ' ' %}&p={{request.GET.p }}{% endif %}{% if request.GET.p_max  %}&p_max={{request.GET.p_max }}{% endif %}{% if request.GET.p_min  %}&p_min={{request.GET.p_min }}{% endif %}">{{ i }}</a></li>
+                          {% endif %}
+                        {% endfor %}
+                        {% if novosti.has_next %}
+                          <li><a href="?page={{ products.next_page_number }}{% if request.GET.query %}&query={{request.GET.query }}{% endif %}{% if request.GET.c  and request.GET.c != ' ' %}&c={{request.GET.c }}{% endif %}{% if request.GET.t  and request.GET.t != ' ' %}&t={{request.GET.t }}{% endif %}{% if request.GET.p  and request.GET.p != ' ' %}&p={{request.GET.p }}{% endif %}{% if request.GET.p_max  %}&p_max={{request.GET.p_max }}{% endif %}{% if request.GET.p_min  %}&p_min={{request.GET.p_min }}{% endif %}">След</a></li>
+                        {% else %}
+                          <li class="disabled"><span aria-hidden="true">След</span></li>
+                        {% endif %}
+                      </ul>
+                    {% endif %}
+                    </nav>
+                 </div>
+            <!-- Paginator end -->
+					</div>
+					<div class="blog-box">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!--  Shop End  -->
+<script>
+	$( document ).ready(function() {
+    $('.side-color > span').click(function(e){
+   e.preventDefault();
+    $('#color').val(this.id);
+         $('#fltrForm').submit();
+     })
+   });
+	$( function() {
+        $("#autowords").autocomplete({source: {{ words|safe }} });
+    });
+</script>
+{% endblock content %}

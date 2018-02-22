@@ -1,0 +1,172 @@
+{% extends "shop_base.html" %}
+{% load staticfiles %}
+{% load thumbnail %}
+{% block content %}
+<!-- Inner Banner Start -->
+<section id="inner-banner" class="back-image-cart">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12 text-center">
+				<div class="inner-banner-detail">
+					<p><a href="/">Главная</a><span> - </span> <a href="/shop/">Каталог</a></p>
+					<h2>Корзина товаров</h2>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- Inner Banner End -->
+<!--  Checkout  -->
+<section id="checkout-section" class="padding_top padding_bottom">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-9 col-sm-9 col-xs-12">
+				<div class="review-tabs">
+					<div class="row">
+						<div class="col-md-12 heading_space">
+							<div class="inner_heading">
+								<h2>Детали <span>заказанных товаров</span></h2>
+							</div>
+						</div>
+					</div>
+					<!-- Tab panes -->
+					<div class="tab-content">
+						<div role="tabpanel" class="tab-pane fade in active" id="p-i">
+							<div class="table-responsive cart_info">
+								<table class="table table-condensed">
+									<thead>
+										<tr class="cart_menu">
+											<td class="image">Товар</td>
+											<td class="description"></td>
+											<td class="price">Цена</td>
+											<td class="quantity">Количество</td>
+											<td class="total">Итог</td>
+											<td class="total">&nbsp;<i class="fa fa-trash-o fa-lg" aria-hidden="true"></i></td>
+											<td></td>
+										</tr>
+									</thead>
+									<tbody>
+                                    {% if cart|length == 0 %}<tr><td><h5>Ваша корзина товаров пуста</h5></td></tr>{% endif %}
+								{% for item in cart %}
+								{% with product=item.product %}
+										<tr>
+											<td>
+												<div class="cart_product">
+													<a href="{{ product.get_absolute_url }}"><img src="{%  thumbnail product.image 90x110 crop  %}" alt="Фото товара">
+													</a>
+												</div>
+											</td>
+											<td>
+												<div class="cart_description">
+													<h4><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></h4>
+                                                    {% if product.str_category not in 'Брюки, Шапки, Куртки, Носки, Обувь, Поло, Блузы, Футболки, Юбки, Платья' %}
+                                                    <p>{{ product.str_category|cut:'ы' }}</p>
+                                                    {% elif product.str_category in 'Шапки, Куртки, Блузы, Футболки, Юбки' %}
+                                                    <p>{{ product.str_category|cut:'и'|add:'а' }}</p>
+                                                    {% elif product.str_category in 'Платья' %}
+                                                    <p>{{ product.str_category|cut:'я'|add:'е' }}</p>
+                                                    {% else %}
+                                                    <p>{{ product.category }}</p>
+                                                    {% endif %}
+                                                    {% if product.has_size != "N" %}
+													<p>размер {{ product.size }}</p>
+                                                    {% endif %}
+                                                     {% if product.has_tips != "Нет" %}
+													<p>{{ product.tips|lower }}.</p>
+                                                    {% endif %}
+													<p>{{ product.color }}</p>
+												</div>
+											</td>
+											<td>
+												<div class="cart_price">
+													<p> <i class="fa fa-rub" aria-hidden="true"></i> {{ product.price }}</p>
+												</div>
+											</td>
+											<td>
+												<div class="cart_quantity_my">
+													<form action="{% url "cart:CartAdd" product.id %}" method="post" class="add">
+													{{ item.update_quantity_form.quantity }}
+                                                   {{ item.update_quantity_form.update }}
+                                                    {% csrf_token %}
+                                                </form>
+												</div>
+											</td>
+											<td>
+												<div class="cart_total">
+													<p class="cart_total_price"> <i class="fa fa-rub" aria-hidden="true"></i> {{ item.total_price }}</p>
+												</div>
+											</td>
+											<td>
+												<div class="cart_delete">
+													<a class="cart_quantity_delete" href="{% url "cart:CartRemove" product.id %}"><i class="fa fa-times"></i></a>
+												</div>
+											</td>
+										</tr>
+									{% endwith %}
+									{% endfor %}
+									</tbody>
+								</table>
+							</div>
+							<hr>
+                        {% if cart|length > 0 %}
+                        {% if has_cupons %}
+                          <div class="table-responsive cart_info">
+                            <table class="table table-condensed">
+                                <tbody>
+                                <form action="{% url "cupon:apply" %}" method="post" class="add">
+                                {% csrf_token %}
+                                {% for field in cupon_apply_form %}
+                                    <tr >
+                                        <td class="col-md-1">{{ field }}</td>
+                                        <td class="col-md-1"><input class="btn-checkout" type="submit" value="Применить промокод"></td>
+                                    </tr>
+                                {% endfor %}
+                                </form>
+                                </tbody>
+                            </table>
+                          </div>
+                       {% endif %}
+                        {% endif %}
+                        {% if cart|length > 0 %}<a class="btn-checkout" href="{% url "orders:OrderCreate" %}">Оформить</a>{% endif %}
+							<a class="btn-checkout" href="/shop/">Продолжить покупки</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3 col-sm-3 col-xs-12 check-out-right">
+				<div class="table-responsive cart_info">
+					<div class="inner_heading">
+						<h2>&#x20BD; <span>Итого</span></h2>
+					</div>
+					<table class="table table-condensed total-result">
+						<tbody>
+                        {% if cart|length > 0 %}
+                        {% if cart.cupon %}
+                        <tr>
+                            <td>Сумма без скидки</td>
+                            <td><b>&#x20BD; {{ cart.get_total_price }}</b></td>
+                        </tr>
+                        <tr>
+                            <td>Промокод</td>
+                            <td>"{{ cart.cupon.code }}"</td>
+                        </tr>
+							<tr>
+								<td>Скидка {{ cart.cupon.discount }}%</td>
+								<td>&#x20BD; {{ cart.get_discount|floatformat:"2" }}</td>
+							</tr>
+                        {% endif %}
+                        {% endif %}
+							<tr>
+								<td>Сумма заказа</td>
+                                <td><span><b>&#x20BD; {{ cart.get_total_price_after_discount|floatformat:"2" }}</b></span>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!--  Check out End  -->
+{% endblock content %}

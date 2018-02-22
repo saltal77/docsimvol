@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+{% load thumbnail %}
+{% load rutag %}
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Магазин DocSimvol</title>
+    <meta name="description" content="
+      Медицинская одежда, акксессуары, сувениры и мед-инструменты">
+    <meta name="keywords" content="Ставрополь, Анапа, подарки, сувениры, аксессуары, медицинские
+    инструменты, подарок врачу, подарок медику, халаты, костюмы, комбинезоны, брюки,
+медицинская одежда, мед одежда, медицинская форма, интернет-магазин медицинской одежды, магазин
+медицинской одежды, docsimvol, медицинские платья, доступные цены, недорого, медицинская одежда купить,
+медицинская одежда недорого, медицинская одежда официальный сайт, купить мед одежду в интернет магазине,
+одежда для медиков, одежда для медицинских работников, заказать медицинскую одежду, одежда для врачей,
+ медицинская одежда интернет магазин недорого, доктор медицинская одежда">
+    <meta property="og:locale" content="ru_RU" />
+<meta property="og:title" content="Отличная медицинская одежда и не только!" />
+<meta property="og:type" content="article" />
+<meta property="og:description" content="Медицинская одежда, акксессуары, сувениры, мед-инструменты" />
+<meta property="og:url" content="http://docsimvol.ru" />
+<meta property="og:site_name" content="Магазин медодежды DocSimvol" />
+<meta property="og:image" content="http://docsimvol.ru/static/img/pic.png" />
+<meta property="og:image:width" content="150" />
+<meta property="og:image:height" content="100" />
+	<link rel="icon" href="{% static 'img/favicon.ico'%}" type="image/x-icon">
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="{% static 'sitemap.xml'%}" />
+<!-- Bootstrap -->
+<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+<!-- Font-awesome -->
+<link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet">
+
+<!-- Bootsnav -->
+<link href="{% static 'css/bootsnav.css' %}" rel="stylesheet">
+
+<!-- Cubeportfolio -->
+<link href="{% static 'css/cubeportfolio.min.css' %}" rel="stylesheet">
+<link href="{% static 'css/jquery.fancybox.css' %}" rel="stylesheet">
+
+<!-- OWL-Carousel -->
+<link href="{% static 'css/owl.carousel.css' %}" rel="stylesheet">
+<link href="{% static 'css/owl.transitions.css' %}" rel="stylesheet">
+
+<!-- Slider -->
+<link rel="stylesheet" type="text/css" href="{% static 'css/settings.css' %}">
+
+<!-- Custom Style Sheet -->
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+<!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+    (function (d, w, c) {
+        (w[c] = w[c] || []).push(function() {
+            try {
+                w.yaCounter47586607 = new Ya.Metrika({
+                    id:47586607,
+                    clickmap:true,
+                    trackLinks:true,
+                    accurateTrackBounce:true,
+                    webvisor:true
+                });
+            } catch(e) { }
+        });
+
+        var n = d.getElementsByTagName("script")[0],
+            s = d.createElement("script"),
+            f = function () { n.parentNode.insertBefore(s, n); };
+        s.type = "text/javascript";
+        s.async = true;
+        s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+        if (w.opera == "[object Opera]") {
+            d.addEventListener("DOMContentLoaded", f, false);
+        } else { f(); }
+    })(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/47586607" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+</head>
+<body class="overflow_hidden">
+<!-- Loader Start -->
+<div class="loading-page">
+	<div class="counter">
+		<p><img src="{% static 'img/logo.png' %}" alt="Логотип"></p>
+		<h2>0%</h2>
+		<hr/>
+	</div>
+</div>
+<!-- Loader End  -->
+<!--  Header Start  -->
+<header id="header-top-5">
+	<div id="header-top-commerce">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-3 col-sm-3 col-xs-12">
+					<div class="cont_office">
+						<div class="office_menu"></div>
+					</div>
+				</div>
+				<div class="col-md-9 col-sm-9 col-xs-12 commerce_right_links">
+					<div class="cont_office">
+						<div class="office_menu"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="header_bottom">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-3 col-sm-3 col-xs-12">
+					<div class="commerce_logo">
+						<a href="/">
+							<img src="{% static 'img/logo.png' %}" alt="Логотип">
+						</a>
+					</div>
+				</div>
+				<div class="col-md-4 col-sm-4 col-xs-12">
+					<form class="commerce_search">
+                        <input id='tags' type="search" class="search" placeholder="введите запрос..." name="query" value="{{query|default:''}}">
+                         <input type="submit" name="button" class="button" value="">
+						<span><i class="fa fa-search" aria-hidden="true"></i></span>
+					</form>
+				</div>
+				<div class="col-md-2 col-sm-2 col-xs-12">
+					<div class="commerce_phone">
+						<p><i class="fa fa-phone" aria-hidden="true"></i>+7 (928) 639 6029</p>
+					</div>
+				</div>
+				<div class="col-md-3 col-sm-3 col-xs-12">
+					<a href="{% url "cart:CartDetail" %}">
+					<div class="commerce_cart">
+						<span><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
+						{% with total_items=cart|length %}
+                        {% if cart|length > 0 %}
+						<p>{{ total_items }} {{ total_items|rupluralize:"товар,товара,товаров" }} - {{ cart.get_total_price }} <i class="fa fa-rub" aria-hidden="true"></i></p>
+						{% else %}
+                        0,00 <i class="fa fa-rub" aria-hidden="true"></i>
+                        {% endif %}
+					    {% endwith %}
+					</div>
+					</a>
+				</div>
+</div>
+			</div>
+		</div>
+	</div>
+	<nav class="navbar navbar-default navbar-sticky bootsnav">
+		<div class="container">
+			<!-- Start Header Navigation -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
+						<i class="fa fa-bars"></i>
+					</button>
+			</div>
+			<!-- End Header Navigation -->
+			<div class="collapse navbar-collapse nav_2 clearfix" id="navbar-menu">
+				<ul class="nav navbar-nav" data-in="fadeInDown" data-out="fadeOutUp">
+					<li>
+						<a href="/">Главная</a>
+					</li>
+					<li>
+						<a href="/about/">О нас</a>
+					</li>
+					<li>
+						<a href="/news/">Новости</a>
+					</li>
+					<li>
+						<a href="/shop/">Каталог</a>
+					</li>
+					<li>
+						<a href="/delivery/">Доставка</a>
+					</li>
+					<li><a href="/contacts/">Контакты</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+</header>
+<!--  Header End  -->
+{% if not qflag %}
+<!--  Banner Start  -->
+<div class="rev_slider_wrapper">
+	<!-- START REVOLUTION SLIDER 5.0 auto mode -->
+	<div id="rev_slider_3" class="rev_slider" data-version="5.0">
+		<ul>
+			<!-- SLIDE  -->
+			<li data-transition="fade">
+				<!-- MAIN IMAGE -->
+				<img src="{{ action1.imageB.url }}" alt="Фото баннер" data-bgposition="center center" data-bgfit="cover">
+				<!-- LAYER NR. 1 -->
+				<div class="tp-caption  tp-resizeme banner_5_box text-right" data-x="right" data-y="300" data-width="full" data-transform_idle="o:1;" data-transform_in="y:[-200%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;s:1500;e:Power3.easeInOut;" data-transform_out="auto:auto;s:1000;e:Power3.easeInOut;" data-mask_in="x:0px;y:0px;s:inherit;e:inherit;" data-mask_out="x:0;y:0;s:inherit;e:inherit;" data-start="800">
+					<div class="heading_box">
+						<h2>{{ action1.title }}</h2>
+						<br>
+						<p>{{ action1.actiontext }}</p>
+					</div>
+					<br>
+					<a href="/shop/" class="btn_dark">{{ action1.btntext }}</a>
+				</div>
+			</li>
+			<li data-transition="fade"> <img src="{{ action2.imageB.url }}" alt="Фото баннер" data-bgposition="center center" data-bgfit="cover">
+				<div class="tp-caption  tp-resizeme banner_5_box text-left" data-x="left" data-y="300" data-width="full" data-transform_idle="o:1;" data-transform_in="y:[-200%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;s:1500;e:Power3.easeInOut;" data-transform_out="auto:auto;s:1000;e:Power3.easeInOut;" data-mask_in="x:0px;y:0px;s:inherit;e:inherit;" data-mask_out="x:0;y:0;s:inherit;e:inherit;" data-start="800">
+					<div class="heading_box">
+						<h2>{{ action2.title }}</h2>
+						<br>
+						<p>{{ action2.actiontext }}</p>
+					</div>
+					<br>
+					<a href="/shop/" class="btn_dark">{{ action2.btntext }}</a>
+				</div>
+			</li>
+			<li data-transition="fade"> <img src="{{ action3.imageB.url }}" alt="Фото баннер" data-bgposition="center center" data-bgfit="cover">
+				<div class="tp-caption  tp-resizeme banner_5_box text-center" data-x="center" data-y="300" data-width="full" data-transform_idle="o:1;" data-transform_in="y:[-200%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;s:1500;e:Power3.easeInOut;" data-transform_out="auto:auto;s:1000;e:Power3.easeInOut;" data-mask_in="x:0px;y:0px;s:inherit;e:inherit;" data-mask_out="x:0;y:0;s:inherit;e:inherit;" data-start="800">
+					<div class="heading_box">
+						<h2>{{ action3.title }}</h2>
+						<br>
+						<p>{{ action3.actiontext }}</p>
+					</div>
+					<br>
+                   <a href="/shop/" class="btn_dark">{{ action3.btntext }}</a>
+				</div>
+			</li>
+		</ul>
+	</div>
+	<!-- END REVOLUTION SLIDER -->
+</div>
+<!--  Banner End  -->
+{% endif %}
+<!-- Product Category Start  -->
+<section id="product_category" class="padding_top">
+	<div class="container">
+		<div class="row heading_space">
+			<div class="col-md-12">
+				<div class="commerce_heading">
+                    {% if qflag %}
+                        <h2>Результат поиска</h2>
+                    {% else %}
+					<h2>Новые поступления</h2>
+                    {% endif %}
+				</div>
+			</div>
+		</div>
+		<div class="row">
+       {% for prod in products %}
+			<div class="col-md-3 col-sm-3 col-xs-12">
+				<div class="product_box web_box">
+					<figure class="wpf-demo-6">
+						<a href="{{ prod.get_absolute_url }}"><img src="{%  thumbnail prod.image 270x345 crop  %}" alt="Фото товара">
+						</a>
+					</figure>
+					<div class="product_detail">
+						{% if prod.str_category not in 'Брюки, Шапки, Куртки, Носки, Обувь, Поло, Блузы, Футболки, Юбки, Платья' %}
+						<span>{{ prod.str_category|cut:'ы' }}</span>
+                        {% elif prod.str_category in 'Шапки, Куртки, Блузы, Футболки, Юбки' %}
+						<span>{{ prod.str_category|cut:'и'|add:'а' }}</span>
+						{% elif prod.str_category in 'Платья' %}
+						<span>{{ prod.str_category|cut:'я'|add:'е' }}</span>
+                        {% else %}
+						<span>{{ prod.category }}</span>
+                        {% endif %}
+						<a href="{{ prod.get_absolute_url }}">
+							<h3>{{ prod.name }}</h3>
+						</a>
+						<span>&#x20BD; {{ prod.price }}</span>
+						<ul class="product_link">
+							<li><a href="{{ prod.get_absolute_url }}"><i class="fa fa-cart-arrow-down fa-lg" aria-hidden="true"></i></a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+    {% empty %}
+    <h5>Нет товаров для отображения</h5>
+    {% endfor %}
+		  </div>
+		</div>
+</section>
+<!-- Product Category end  -->
+<!-- Offer Start  -->
+<div class="container padding_top">
+	<div class="offer">
+		<div class="row">
+			<div class="col-md-6 col-sm-6 col-xs-12">
+				<p>Становитесь лучше вместе с нами!</p>
+			</div>
+			<div class="col-md-2 col-sm-2 col-xs-12">
+				<img src="{% static 'img/endo.jpg' %}" alt="Лого">
+			</div>
+			<div class="col-md-4 col-sm-4 col-xs-12 slogan">
+				<p>Чувствуйте себя комфортно и уверенно:)</p>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Offer End  -->
+<!-- Collection Offer Start -->
+{% if not qflag %}
+<section id="collection_offer" class="p-t-35">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6 col-sm-6 col-xs-12">
+				<div class="offer_off">
+					<img src="{{ action1.imageA.url }}" alt="Фото акции">
+					<div class="offer_detail">
+						<h3>{{ action1.title }}</h3><br>
+						<p>{{ action1.actiontext }}</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6 col-sm-6 col-xs-12">
+				<div class="offer_off">
+					<img src="{{ action2.imageA.url }}" alt="Фото акции">
+					<div class="offer_detail">
+						<h3>{{ action2.title }}</h3><br>
+						<p>{{ action2.actiontext }}</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+{% endif %}
+<!-- Collection Offer End  -->
+<!-- Best Selling Start  -->
+{% if bestseller %}
+<section id="best_selling" class="padding_top">
+	<div class="container">
+		<div class="row heading_space">
+			<div class="col-md-12">
+				<div class="commerce_heading">
+					<h2>Бестселлеры</h2>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div id="best_selling_slider">
+            {% for prod in bestseller %}
+					<div class="item web_box">
+						<div class="product_box web_box">
+							<figure class="wpf-demo-6">
+								{% if prod.novelty %}<span class="product_tag_yellow">Новинка</span>{% endif %}
+								<a href="{{ prod.get_absolute_url }}"><img src="{%  thumbnail prod.image 270x345 crop  %}" alt="Фото товара">
+								</a>
+							</figure>
+									<div class="product_detail">
+						{% if prod.str_category not in 'Брюки, Шапки, Куртки, Носки, Обувь, Поло, Блузы, Футболки, Юбки, Платья' %}
+						<span>{{ prod.str_category|cut:'ы' }}</span>
+                        {% elif prod.str_category in 'Шапки, Куртки, Блузы, Футболки, Юбки' %}
+						<span>{{ prod.str_category|cut:'и'|add:'а' }}</span>
+						{% elif prod.str_category in 'Платья' %}
+						<span>{{ prod.str_category|cut:'я'|add:'е' }}</span>
+                        {% else %}
+						<span>{{ prod.category }}</span>
+                        {% endif %}
+						<a href="{{ prod.get_absolute_url }}">
+							<h3>{{ prod.name }}</h3>
+						</a>
+						<div class="product-rating">
+									<div class="stars">
+                                        {% for comnt in prod.rate.all %}
+                                          {% if comnt.display %}
+                                        {% for i in '12345' %}
+                                          {% if forloop.counter <= comnt.rating %}
+                                          <i class='fa fa-star'></i>
+                                          {% else %}
+                                          <i class='fa fa-star-o'></i>
+                                          {% endif %}
+                                        {% endfor %}
+                                          {% endif %}
+                                          {% endfor %}
+									</div>
+								    </div>
+						<span>&#x20BD; {{ prod.price }}</span>
+						<ul class="product_link">
+							<li><a href="{{ prod.get_absolute_url }}"><i class="fa fa-cart-arrow-down fa-lg" aria-hidden="true"></i></a>
+							</li>
+						</ul>
+					</div>
+						</div>
+					</div>
+		    {% empty %}
+              <h5>Нет товаров для отображения</h5>
+            {% endfor %}
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+{% endif %}
+<!-- Best Selling end  -->
+<!-- Featured products Start  -->
+<section id="feature-product" class="padding_top">
+	<div class="container">
+		<div class="row heading_space">
+			<div class="col-md-12">
+				<div class="commerce_heading">
+					<h2>Рекомендуем</h2>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div id="feature_slider">
+        {% for prod in recommended %}
+					<div class="item web_box">
+						<div class="product_box web_box">
+							<figure class="wpf-demo-6">
+								<a href="{{ prod.get_absolute_url }}"><img src="{%  thumbnail prod.image 270x345 crop  %}"  alt="Фото товара">
+								</a>
+							</figure>
+						<div class="product_detail">
+						{% if prod.str_category not in 'Брюки, Шапки, Куртки, Носки, Обувь, Поло, Блузы, Футболки, Юбки, Платья' %}
+						<span>{{ prod.str_category|cut:'ы' }}</span>
+                        {% elif prod.str_category in 'Шапки, Куртки, Блузы, Футболки, Юбки' %}
+						<span>{{ prod.str_category|cut:'и'|add:'а' }}</span>
+						{% elif prod.str_category in 'Платья' %}
+						<span>{{ prod.str_category|cut:'я'|add:'е' }}</span>
+                        {% else %}
+						<span>{{ prod.category }}</span>
+                        {% endif %}
+						<a href="{{ prod.get_absolute_url }}">
+							<h3>{{ prod.name }}</h3>
+						</a>
+						<div class="product-rating">
+									<div class="stars">
+                                        {% for comnt in prod.rate.all %}
+                                          {% if comnt.display %}
+                                        {% for i in '12345' %}
+                                          {% if forloop.counter <= comnt.rating %}
+                                          <i class='fa fa-star'></i>
+                                          {% else %}
+                                          <i class='fa fa-star-o'></i>
+                                          {% endif %}
+                                        {% endfor %}
+                                          {% endif %}
+                                          {% endfor %}
+									</div>
+								    </div>
+						<span>&#x20BD; {{ prod.price }}</span>
+						<ul class="product_link">
+							<li><a href="{{ prod.get_absolute_url }}"><i class="fa fa-cart-arrow-down fa-lg" aria-hidden="true"></i></a>
+							</li>
+						</ul>
+					</div>
+						</div>
+					</div>
+		    {% empty %}
+             <h5>Нет товаров для отображения</h5>
+            {% endfor %}
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- Featured products end  -->
+<!-- Latest News Start  -->
+<section id="news" class="padding_bottom padding_top">
+	<div class="container">
+		<div class="row p-b-35">
+			<div class="col-md-12">
+				<div class="commerce_heading">
+					<h2>Наши последние новости</h2>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+            {% for nov in novosti %}
+			<div class="col-md-6 col-sm-6 col-xs-12 m-t-35">
+				<div class="logistic_news">
+					<img src="{%  thumbnail nov.image 570x350 crop  %}" alt="фото новости">
+					<div class="logistic_news_detail">
+						<h3><a href="{{ nov.get_absolute_url }}">{{ nov.title }}</a></h3>
+					<p>{{ nov.news|truncatewords:25 }}</p>
+						<span>{{ nov.author|title }}</span>
+						<span><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;{{ nov.created|date:'d M Y' }}</span>
+					</div>
+				</div>
+			</div>
+            {%empty%}
+            <p>Пока нет свежих новостей</p>
+            {% endfor %}
+		</div>
+	</div>
+</section>
+<!-- Latest News End  -->
+<!-- Footer -->
+<footer id="footer">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4 col-sm-4 col-xs-12">
+				<div class="footer_detail">
+					<a href="/"><img src="{% static 'img/logo.png' %}" alt="Логотип">
+					</a>
+                    <p>График работы магазина: ср.-пт. с 11 до 18, сб.-вс. с 11 до 19, пн.-вт. - выходной</p>
+					<div class="adres">
+						<p><i class="fa fa-phone" aria-hidden="true"></i>
+						</p>
+						<p>
+							<span>+7 (928) 639 6029</span>
+						</p>
+					</div>
+					<div class="adres">
+						<p><i class="fa fa-envelope-open-o" aria-hidden="true"></i>
+						</p>
+						<p>
+							<a href="javascript:void(0)"><span>info@docsimvol.ru</span></a>
+						</p>
+					</div>
+					<div class="adres">
+						<p><i class="fa fa-map-marker" aria-hidden="true"></i>
+						</p>
+						<p>
+							<span>ТРЦ Маршал 5 этаж</span>
+							<span>ул. Тухачевского 26</span>
+							<span>Россия, г. Ставрополь</span>
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4 col-sm-4 col-xs-12">
+			</div>
+			<div class="col-md-4 col-sm-4 col-xs-12">
+				<div class="footer_news">
+					<h3>Наши координаты</h3>
+					<div id="map1" style="margin-top: 40px;">
+						<iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A6548421a6b06b1c7ca0882d97cae583e4b13f0c12fdd0f7f06c5d786014e7cd2&amp;source=constructor" width="360" height="279" frameborder="0"></iframe>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Back To Top -->
+		<a href="#top" class="scroll"><i class="fa fa-angle-up" aria-hidden="true"></i></a>
+		<!-- /#Back To Top -->
+		<div class="footer_bottom">
+			<a href="{% static 'humans.txt'%}"><img src="{% static 'img/humanstxt.png'%}"></a>
+			<div class="row">
+				<div class="col-md-7">
+					<div class="copyright">
+						<p> &copy; {% now "Y" %} Powered by saltal. Designed by <a href="https://themeforest.net/user/99_design"> 99_Designs.</a>
+						</p>
+					</div>
+				</div>
+				<div class="col-md-5">
+					<ul class="socialicons">
+						<li><a href="https://www.facebook.com/DocSimvol/"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+						</li>
+						<li><a href="https://ok.ru/profile/447712514010/"><i class="fa fa-odnoklassniki" aria-hidden="true"></i></a>
+						</li>
+						<li><a href="https://www.instagram.com/docsimvol/"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+<!-- /#Footer -->
+<!--Required JS -->
+<script src="{% static 'js/jquery.2.2.3.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/owl.carousel.min.js' %}"></script>
+<script src="{% static 'js/bootsnav.js' %}"></script>
+<script src="{% static 'js/jquery.cubeportfolio.min.js' %}"></script>
+<script src="{% static 'js/jquery.fancybox.js' %}"></script>
+<script src="{% static 'js/jquery-countTo.js' %}"></script>
+<script src="{% static 'js/jquery.appear.js' %}"></script>
+<script src="{% static 'js/jquery.typewriter.js' %}"></script>
+<script src="{% static 'js/.elevateZoom-3.0.8.min.js' %}"></script>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAOBKD6V47-g_3opmidcmFapb3kSNAR70U"></script>
+<script src="{% static 'js/gmaps.js' %}"></script>
+<script src="{% static 'js/contact.js' %}"></script>
+<script src="{% static 'js/jquery.typewriter.js' %}"></script>
+<script src="{% static 'js/themepunch/jquery.themepunch.tools.min.js' %}"></script>
+<script src="{% static 'js/themepunch/jquery.themepunch.revolution.min.js' %}"></script>
+<script src="{% static 'js/themepunch/revolution.extension.layeranimation.min.js' %}"></script>
+<script src="{% static 'js/themepunch/revolution.extension.navigation.min.js' %}"></script>
+<script src="{% static 'js/themepunch/revolution.extension.parallax.min.js' %}"></script>
+<script src="{% static 'js/themepunch/revolution.extension.slideanims.min.js' %}"></script>
+<script src="{% static 'js/functions.js' %}"></script>
+
+</body>
+</html>

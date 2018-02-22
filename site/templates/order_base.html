@@ -1,0 +1,158 @@
+{% extends "shop_base.html" %}
+{% load static %}
+{% block content %}
+<!-- Inner Banner Start -->
+<section id="inner-banner" class="back-image-ordercreate">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12 text-center">
+				<div class="inner-banner-detail">
+					<p><a href="/">Главная</a><span> - </span> <a href="/cart/">Корзна</a> </p>
+					<h2>Оформление</h2>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- Inner Banner End -->
+<!--  Checkout  -->
+<section id="checkout-section" class="padding_top padding_bottom">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-9 col-sm-9 col-xs-12">
+				<div class="review-tabs">
+					<div class="row">
+						<div class="col-md-12 heading_space">
+							<div class="inner_heading">
+								<h2>Оформление <span>заказа</span></h2>
+							</div>
+						</div>
+					</div>
+					<!-- Nav tabs -->
+					<ul class="nav nav-tabs" role="tablist">
+						<li role="presentation" class="active"><a href="#description" aria-controls="description" role="tab" data-toggle="tab">Заполните форму вашими данными</a>
+						</li>
+					</ul>
+					<!-- Tab panes -->
+					<div class="tab-content">
+						<div role="tabpanel" class="tab-pane fade in active" id="description">
+							<form class="chckout-form" action="." method="post">
+                           {% csrf_token %}
+								<div class="row">
+									<div class="col-md-6 col-sm-6 col-xs-12">
+										<div class="form-group">
+                                            {% for field in form %}
+                                                {% if field.name == 'first_name' %}
+                                                    <label>Имя<span class="text-error">*</span>
+												</label>
+                                                    <span style="color: red">{{ field.errors }}</span>
+                                            {{ field }}
+                                                    {% elif field.name == 'address' %}
+                                                    <label>Адрес<span class="text-error">*</span>
+												</label>
+                                                    <span style="color: red">{{ field.errors }}</span>
+                                            {{ field }}
+                                                    {% elif field.name == 'tlf' %}
+                                                    <label>Телефон в формате 89998887766<span class="text-error">*</span>
+												</label>
+                                                    <span style="color: red">{{ field.errors }}</span>
+                                            {{ field }}
+                                                    {% elif field.name == 'comment' %}
+                                                    <label>Комментарий<span class="text-error"></span>
+												</label>
+                                                    <span style="color: red">{{ field.errors }}</span>
+                                            {{ field }}
+                                                {% endif %}
+                                             {% endfor %}
+										</div>
+									</div>
+									<div class="col-md-6 col-sm-6 col-xs-12">
+										<div class="form-group">
+                                            {% for field in form %}
+                                                {% if field.name == 'last_name' %}
+                                                    <label>Фамилия<span class="text-error">*</span>
+												</label>
+                                                    <span style="color: red">{{ field.errors }}</span>
+                                            {{ field }}
+                                                    {% elif field.name == 'city' %}
+                                                    <label>Город<span class="text-error">*</span>
+												</label>
+                                                    <span style="color: red">{{ field.errors }}</span>
+                                            {{ field }}
+                                                   {% elif field.name == 'email' %}
+                                                    <label>Email<span class="text-error">*</span>
+												</label>
+                                                    <span style="color: red">{{ field.errors }}</span>
+                                            {{ field }}
+                                                    {% elif field.name == 'delivery' %}
+                                           <div class="row">
+												<div class="col-md-6">
+													<div class="form-group">
+														<label>Нужна доставка? <span class="text-error"></span>
+															</label>
+														<div>
+                                                           <span style="color: red">{{ field.errors }}</span>
+															{{ field }}
+                                                            <label for="delivery">&nbsp;Да </label>
+														</div>
+													</div>
+												</div>
+											</div>
+                                                {% endif %}
+                                             {% endfor %}
+										</div>
+									</div>
+								</div>
+								<hr>
+                            <button class="btn-checkout"  type="submit">Отправить</button>
+							<a class="btn-checkout" href="/cart/">Назад</a>
+							</form>
+                        <div class="text-oblic">
+                            <p>Обратите Ваше внимание на условия доставки:</p><br>
+                            {% for inf in text %}
+							<span>{% autoescape off %}{{ inf.deliver }}{% endautoescape %}</span>
+                            {% empty %}
+                            <span>Контент редактируется</span>
+                            {% endfor %}
+						</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3 col-sm-3 col-xs-12 check-out-right">
+				<div class="table-responsive cart_info">
+					<div class="inner_heading">
+						<h2>&#x20BD; <span>Итого</span></h2>
+					</div>
+					<table class="table table-condensed total-result">
+						<tbody>
+                         {% if cart|length > 0 %}
+                        {% if cart.cupon %}
+                        <tr>
+                            <td>Сумма без скидки</td>
+                            <td><b>&#x20BD; {{ cart.get_total_price }}</b></td>
+                        </tr>
+                        <tr>
+                            <td>Промокод</td>
+                            <td>"{{ cart.cupon.code }}"</td>
+                        </tr>
+							<tr>
+								<td>Скидка {{ cart.cupon.discount }}%</td>
+								<td>&#x20BD; {{ cart.get_discount|floatformat:"2" }}</td>
+							</tr>
+                        {% endif %}
+                        {% endif %}
+							<tr>
+								<td>Сумма заказа</td>
+                                <td><span><b>&#x20BD; {{ cart.get_total_price_after_discount|floatformat:"2" }}</b></span>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!--  Check out End  -->
+{% endblock content %}

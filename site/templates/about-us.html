@@ -1,0 +1,50 @@
+{% extends "shop_base.html" %}
+{% load staticfiles %}
+{% block content %}
+	<!-- Inner Banner Start -->
+	<section id="inner-banner" class="back-image-aboutus">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 text-center">
+					<div class="inner-banner-detail">
+						<p><a href="/">Главная</a><span> - </span>О нас</p>
+						<h2>Почему мы лучшие?</h2>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Inner Banner End -->
+	<!-- Over view start -->
+	<section id="companyover-view" class="padding_bottom padding_top">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="inner_heading heading_space">
+						<span>Магазин медицинской одежды, аксессуаров и сувениров</span><br>
+						<h2>Кратко о нас</h2>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-8 col-sm-8 col-xs-12">
+					{% for inf in text %}
+					<div class="over-view">
+						<p>{% autoescape off %}{{ inf.about }}{% endautoescape %}</p>
+						<div class="text-oblic">
+							<p>{{ inf.slogan }}</p>
+						</div>
+					</div>
+					{% empty %}
+					<p>Контент редактируется</p>
+                    {% endfor %}
+				</div>
+				<div class="col-md-4 col-sm-4 col-xs-12">
+					<div class="over-view-img">
+						<img src="{% static 'img/about-over-view.jpg' %}">
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+{% endblock content %}

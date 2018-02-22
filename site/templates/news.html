@@ -1,0 +1,77 @@
+{% extends "shop_base.html" %}
+{% load staticfiles %}
+{% block content %}
+<!-- Inner Banner Start -->
+<section id="inner-banner" class="back-image-news">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12 text-center">
+				<div class="inner-banner-detail">
+					<p><a href="/">Главная</a><span> - </span> <a href="/news/">Новости</a></p>
+					<h2>Ознакомьтесь с нашими новостями и акциями</h2>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- Inner Banner End -->
+<!--  Blog Start  -->
+<section id="blog-section" class="padding_bottom padding_top">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+                {% for nov in novosti %}
+				<div class="blog-box">
+					<div id="web" class="blog-box-img">
+						<div id="bloghome_slider">
+								<img src="{{nov.image.url}}" alt="Фото Новости">
+						</div>
+						<div class="date-tag">
+							<span class="date-sec"><p>{{ nov.created|date:'j'}}</p></span>
+							<span class="pic-sec"><p>{{ nov.created|date:'M'}}</p></span>
+						</div>
+					</div>
+					<div class="blog-box-deatil">
+						<h2><a href="javascript:void(0)">{{ nov.title }}</a></h2>
+						<div class="blog-tags">
+							<a href="javascript:void(0)"><span></span>{{ nov.author|title }}</a>
+						</div>
+                        <p>{{ nov.news }}</p>
+						</div>
+				</div>
+                {% empty %}
+                    <p>К сожалению у нас нет свежих новостей</p>
+                {% endfor %}
+          <!-- Paginator -->
+                <div class="col-md-12 text-center padding-top-50">
+                    <nav aria-label="...">
+                    {% if novosti.has_other_pages %}
+                      <ul class="pagination">
+                        {% if novosti.has_previous %}
+                          <li><a href="?page={{ novosti.previous_page_number }}">Пред</a></li>
+                        {% else %}
+                          <li class="disabled"><span aria-hidden="true">Пред</span></li>
+                        {% endif %}
+                        {% for i in novosti.paginator.page_range %}
+                          {% if novosti.number == i %}
+                            <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                          {% else %}
+                            <li><a href="?page={{ i }}">{{ i }}</a></li>
+                          {% endif %}
+                        {% endfor %}
+                        {% if novosti.has_next %}
+                          <li><a href="?page={{novosti.next_page_number }}">След</a></li>
+                        {% else %}
+                          <li class="disabled"><span aria-hidden="true">След</span></li>
+                        {% endif %}
+                      </ul>
+                    {% endif %}
+                    </nav>
+                 </div>
+            <!-- Paginator end -->
+			</div>
+		</div>
+	</div>
+</section>
+<!--  Blog End  -->
+{% endblock content %}

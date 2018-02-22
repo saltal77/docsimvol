@@ -1,0 +1,46 @@
+{% extends "shop_base.html" %}
+{% load staticfiles %}
+{% block content %}
+<!-- Inner Banner Start -->
+<section id="inner-banner" class="back-image-news">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12 text-center">
+				<div class="inner-banner-detail">
+					<p><a href="/">Главная</a><span> - </span> <a href="/news/">Новости</a></p>
+					<h2>Подробности</h2>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- Inner Banner End -->
+<!--  Blog Start  -->
+<section id="blog-section" class="padding_bottom padding_top">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="blog-box">
+					<div id="web" class="blog-box-img">
+						<div id="bloghome_slider">
+								<img src="{{novost.image.url}}" alt="Фото Новости">
+						</div>
+						<div class="date-tag">
+							<span class="date-sec"><p>{{ novost.created|date:'j'}}</p></span>
+							<span class="pic-sec"><p>{{ novost.created|date:'M'}}</p></span>
+						</div>
+					</div>
+					<div class="blog-box-deatil">
+						<h2><a href="javascript:void(0)">{{ novost.title }}</a></h2>
+						<div class="blog-tags">
+							<a href="javascript:void(0)"><span></span>{{ novost.author|title }}</a>
+						</div>
+                        <p>{{ novost.news }}</p>
+						</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!--  Blog End  -->
+{% endblock content %}

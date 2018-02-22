@@ -1,0 +1,51 @@
+{% extends "shop_base.html" %}
+{% load staticfiles %}
+{% block content %}
+	<!-- Inner Banner Start -->
+	<section id="inner-banner" class="back-image-delivery">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 text-center">
+					<div class="inner-banner-detail">
+						<p><a href="/">Главная</a><span> - </span>О доставке</p>
+						<h2>О том как можно получить свой заказ</h2>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Inner Banner End -->
+	<!-- Over view start -->
+	<section id="companyover-view" class="padding_bottom padding_top">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="inner_heading heading_space">
+						<p>Все просто:)</p>
+						<h2>Как получить заказ?</h2>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-8 col-sm-8 col-xs-12">
+                   {% for inf in text %}
+					<div class="over-view">
+						<p>{% autoescape off %}{{ inf.deliver }}{% endautoescape %}</p>
+						<div class="text-oblic">
+							<p>{{ inf.slogan }}</p>
+						</div>
+					</div>
+					{% empty %}
+					<p>Контент редактируется</p>
+					{% endfor %}
+				</div>
+				<div class="col-md-4 col-sm-4 col-xs-12">
+					<div class="over-view-img">
+						<iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A6548421a6b06b1c7ca0882d97cae583e4b13f0c12fdd0f7f06c5d786014e7cd2&amp;source=constructor" width="340" height="450" frameborder="0"></iframe>
+						</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Over view end -->
+{% endblock content %}

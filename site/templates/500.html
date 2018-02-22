@@ -1,0 +1,35 @@
+{% extends "shop_base.html" %}
+{% load staticfiles %}
+{% block content %}
+<!-- Inner Banner Start -->
+<section id="inner-banner" class="back-image-error">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12 text-center">
+				<div class="inner-banner-detail">
+					<p><a href="/">Главная</a><span> - </span><a href="/shop/">Каталог</a></p>
+					<h2>500 Ошибка - Опаньки! Кажется у нас проблемы(.</h2>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- 404 Error -->
+<section id="error_page" class="padding_bottom padding_top">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-2 col-sm-2"></div>
+			<div class="col-md-8 col-sm-8 col-xs-12 text-center">
+				<h3>Серврные ошибки обязательно будут исправлены...</h3>
+				<hr>
+				<br>
+				<div class="error_img">
+					<a class="btn_dark" href="/">На главную</a>
+				</div>
+			</div>
+			<div class="col-md-2 col-sm-2"></div>
+		</div>
+	</div>
+</section>
+<!-- 404 Error End -->
+{% endblock content %}
