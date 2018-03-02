@@ -17,6 +17,6 @@ urlpatterns = [
     url(r'^', include('shop.urls', namespace='shop')),
     url(r'^cart/', include('cart.urls', namespace='cart')),
     url(r'^order/', include('orders.urls', namespace='orders')),
-    url(r'^robots\.txt$', lambda r: HttpResponse("User-agent: *\nDisallow: ", content_type="text/plain")),
+    url(r'^robots\.txt$', lambda r: HttpResponse("User-agent: *\nDisallow: \nHost: http://docsimvol.ru", content_type="text/plain")),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
