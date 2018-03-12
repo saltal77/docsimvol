@@ -56,7 +56,7 @@
                                 {% csrf_token %}
 				<div class="col-md-5 col-sm-5 col-xs-12">
                     {% for field in mailing_form %}
-                        {% if field.name in 'author, tlf, email' %}
+                        {% if field.name in 'author, tlf, email, honey' %}
                             <div class="form-group">
                              <span style="color: red">{{ field.errors }}</span>
                             {{ field }}
