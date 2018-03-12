@@ -115,7 +115,7 @@ def ContactsView(request):
     mailing_form = MailCreateForm()
     if request.method == "POST":
         mailing_form = MailCreateForm(request.POST)
-        if mailing_form.is_valid():
+        if mailing_form.is_valid() and not request.POST['honey']:
             cd = mailing_form.cleaned_data
             tel = cd['tlf'] if cd['tlf'] else 'Не оставлено'
             text = '\n от: %s.\n e-mail: %s\n тел: %s\n Сообщение: %s.\n' \
