@@ -40,6 +40,7 @@ class MailCreateForm(forms.Form):
                            widget=forms.TextInput(attrs={'class': 'form-control',
                                                          'placeholder': 'телефон в формате 89998887766'}),
                            required=False)
+    honey = forms.CharField(widget=forms.HiddenInput(attrs={'value': ''}), required=False)
 
     class Meta:
         fields = ['author', 'email', 'tlf', 'message']
