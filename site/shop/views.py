@@ -6,6 +6,7 @@ from django.db.models import Q, Avg, Sum, Max, Min, Count
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger, InvalidPage, EmptyPage
 from .forms import RatingCreateForm, MailCreateForm, MyFilterForm
 from myshop.tasks import *
+from .decorators import check_recaptcha
 
 def search(query, category=None):
     # обработка поиска
@@ -109,13 +110,13 @@ def NewsViewDetail(request, id):
     novost = get_object_or_404(NewsBlock, id=id)
     return render(request, 'newsdetail.html', {'novost': novost})
 
-
+@check_recaptcha
 def ContactsView(request):
     text = ContactsBlock.objects.all()
     mailing_form = MailCreateForm()
     if request.method == "POST":
         mailing_form = MailCreateForm(request.POST)
-        if mailing_form.is_valid() and not request.POST['honey']:
+        if mailing_form.is_valid() and not request.POST['honey'] and request.recaptcha_is_valid:
             cd = mailing_form.cleaned_data
             tel = cd['tlf'] if cd['tlf'] else 'Не оставлено'
             text = '\n от: %s.\n e-mail: %s\n тел: %s\n Сообщение: %s.\n' \
