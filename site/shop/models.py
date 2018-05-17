@@ -75,7 +75,7 @@ class Category(models.Model):
         return reverse('shop:ProductListByCategory', args=[self.slug])
 
     def distinctgoods(self):
-        # возвращает количество назаний товаров в категории
+        # возвращает действительное количество  товаров в названной категории
         return len(set(self.types.values_list('name')))
 
     class Meta:
